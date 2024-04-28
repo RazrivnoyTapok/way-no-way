@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Главная - форум</h1>
+    {% for route in routes %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Автор</th>
+                    <th scope="col">Дата создания</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">{{ route.id }}</th>
+                    <td>{{ route.name }}</td>
+                    <td>{{ route.mapper.nickname }} #{{ route.author }}</td>
+                    <td>{{ route.creation_date }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+{% endblock %}
