@@ -21,8 +21,8 @@ def global_init(db_file):
     engine = sqlalchemy.create_engine(conn_str, echo=False)
     __factory = orm.sessionmaker(bind=engine)
 
-    from web_project.data.routes import Route
-    from web_project.data.mappers import Mapper
+    from data.routes import Route
+    from data.mappers import Mapper
 
     SqlAlchemyBase.metadata.create_all(engine)
 

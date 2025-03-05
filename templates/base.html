@@ -13,9 +13,12 @@
 <body>
 <header>
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#"><h1>Путёвый - Непутёвый</h1></a>
+        <a class="navbar-brand" href="/"><h1>Путёвый - Непутёвый</h1></a>
+        <a class="navbar-brand" href="/create_post"><h3>Создать пост</h3></a>
+        <a class="navbar-brand" href="/application"><h3>Приложение</h3></a>
+        <a class="navbar-brand" href="/about"><h3>О проекте</h3></a>
         {% if current_user.is_authenticated %}
-            <a class="navbar-brand" href="/logout">{{ current_user.nickname }}</a>
+            <a class="navbar-brand" href="/user_cabinet">{{ current_user.nickname }}</a>
         {% else %}
             <p>
                 <a class="btn btn-primary " href="/register">Зарегистрироваться</a>

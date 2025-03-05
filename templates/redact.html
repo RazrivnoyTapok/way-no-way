@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <h1>Изменение профиля</h1>
+        <h4>Если хотите оставить характеристику без изменений, оставьте поле ввода пустым</h4>
+
+        <p><h4>Никнейм</h4>
+        {{ form.nickname(class="form-control") }}
+        {% for error in form.nickname.errors %}
+            <span style="color: red">{{ error }}</span>
+        {% endfor %}
+
+        <p><h4>Информация</h4>
+        {{ form.info(class="form-control") }}
+        {% for error in form.info.errors %}
+            <span style="color: red">{{ error }}</span>
+        {% endfor %}
+
+        <p><h4>Аватарка</h4>
+        {{ form.profile_picture }}
+        {% for error in form.profile_picture.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+
+        <p><h4>Готово</h4>
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+{% endblock %}

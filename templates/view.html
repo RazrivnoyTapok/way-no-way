@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Просмотр поста #{{ route.id }}</h1>
+    <a href="/view_profile/{{ route.mapper.id }}">
+        <h4>
+            <img src="{{ pfp }}" width="10%" class="img-thumbnail"> {{ route.mapper.nickname }} #{{ route.mapper.id }}
+        </h4>
+    </a>
+    <form method="post" enctype="multipart/form-data">
+        <h4>Загрузить картинку {{ form.dl_image }} Загрузить файл {{ form.dl_text }} {{ form.submit(class="btn btn-primary") }}</h4>
+    </form>
+    <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col"><h4>Характеристики</h4></th>
+                    <th scope="col"><h4>Картинка</h4></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="col">Название</th>
+                    <td rowspan="8"><img src="{{ img }}" width="100%"></td>
+                </tr>
+                <tr>
+                    <td>{{ route.name }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Описание</th>
+                </tr>
+                <tr>
+                    <td>{{ route.description }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Время создания</th>
+                </tr>
+                <tr>
+                    <td>{{ route.creation_date }}</td>
+                </tr>
+                <tr>
+                    <th scope="col">Приватность</th>
+                </tr>
+                <tr>
+                    <td>{{ route.private }}</td>
+                </tr>
+            </tbody>
+        </table>
+{% endblock %}

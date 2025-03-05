@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Личный кабинет</h1>
+    <h2>Настройки профиля</h2>
+    <main role="main" class="container">
+        {% block profile %}{% endblock %}
+    </main>
+    <h2>Настройки сайта</h2>
+    <main role="main" class="container">
+        {% block settings %}{% endblock %}
+    </main>
+    <h2>Ваши посты</h2>
+    <main role="main" class="container">
+        {% block posts %}{% endblock %}
+    </main>
+{% endblock %}

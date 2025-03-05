@@ -1,45 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Регистрация</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <!-- Название -->
-        <p>
-            {{ form.name.label }}<br>
-            {{ form.name(class="form-control") }}<br>
-            {% for error in form.name.errors %}
-                <p class="alert alert-danger" role="alert">
-                    {{ error }}
-                </p>
-            {% endfor %}
-        <!-- Описание -->
-        <p>
-            {{ form.description.label }}<br>
-            {{ form.description(class="form-control") }}<br>
-            {% for error in form.description.errors %}
-                <p class="alert alert-danger" role="alert">
-                    {{ error }}
-                </p>
-            {% endfor %}
-        <!-- Скрытый -->
-        <p>
-            {{ form.private.label }}<br>
-            {{ form.private() }}<br>
-            {% for error in form.private.errors %}
-                <p class="alert alert-danger" role="alert">
-                    {{ error }}
-                </p>
-            {% endfor %}
-        <!-- Картинка -->
-        <p>
-            {{ form.image.label }}<br>
-            {{ form.image() }}
-        <p>
-            {{ form.text.label }}<br>
-            {{ form.text() }}
-        <!-- Зарегистрироваться -->
-        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-        {{ message }}
-    </form>
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <h1>Добавление поста</h1>
+
+    <p><h4>Название маршрута</h4>
+    {{ form.name(class="form-control") }}
+    {% for error in form.photo.errors %}
+    <span style="color: red">{{ error }}</span>
+    {% endfor %}
+
+    <p><h4>Описание маршрута</h4>
+    {{ form.desc(class="form-control") }}
+    {% for error in form.desc.errors %}
+    <span style="color: red">{{ error }}</span>
+    {% endfor %}
+
+    <p><h4>Приватность поста (галочка, если приватный)</h4>
+    {{ form.priv }}
+    {% for error in form.priv.errors %}
+    <span style="color: red">{{ error }}</span>
+    {% endfor %}
+
+    <p><h4>Фото маршрута</h4>
+    {{ form.photo }}
+    {% for error in form.photo.errors %}
+        <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+
+    <p><h4>Файл маршрута</h4>
+    {{ form.text }}
+    {% for error in form.text.errors %}
+         <span style="color: red;">{{ error }}</span>
+    {% endfor %}
+
+    <p><h4>Готово</h4>
+    {{ form.submit(class="btn btn-primary") }}
+</form>
 {% endblock %}

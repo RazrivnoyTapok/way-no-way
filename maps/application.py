@@ -9,6 +9,7 @@ def check_color(col):
     except Exception:
         return False
 
+
 def check_width(wid):
     try:
         if 10 >= int(wid) >= 0:
@@ -17,6 +18,7 @@ def check_width(wid):
     except Exception:
         return False
 
+
 def check_route(rou):
     try:
         if len(routes[rou]['points']) >= 2:
@@ -24,6 +26,7 @@ def check_route(rou):
         return False
     except Exception:
         return False
+
 
 def check_mark(m):
     try:
@@ -44,6 +47,7 @@ def display_button(x, y, txt):
     pygame.draw.rect(screen, (0, 191, 255), (x - 10, y - 10, text.get_width() + 20, text.get_height() + 20))
     screen.blit(text, (x, y))
     # print(x - 10, x + text.get_width() + 10, y - 10, y + text.get_height() + 10)
+
 
 def display_text_field(x, y, txt, default=''):
     text = font.render(txt if txt else default, True, (0, 191, 255) if txt else (128, 128, 128))
@@ -120,7 +124,6 @@ display_text_field(30, 550, '', 'Поиск места')
 display_button(566, 550, 'Искать')
 display_text_field(30, 603, 'Адрес: ')
 display_button(650, 30, 'Прицел на карте')
-display_button(797, 30, 'Обводка линии')
 display_button(650, 80, 'Переключить линию: 1')
 display_button(840, 80, 'Сохранить настройки')
 display_text_field(650, 134, '', 'Цвет линии HEX')
@@ -166,18 +169,34 @@ while running:
             # Кнопки - Файл
             elif 20 <= event.pos[0] <= 95 and 20 <= event.pos[1] <= 50: # Открыть
                 typing = False
+                with (open(f'{texts["file"]}.txt', mode='rt', encoding='utf-8') as f):
+                    dt = list(map(lambda x: x.strip('\n'), f.readlines()))
+                    map_params['ll'], map_params['z'], map_params['l'] = dt[0], dt[1], dt[2]
+                    idx = 3
+                    for j in routes:
+                        j['points'] = dt[idx][dt[idx].find('[') + 1: dt[idx].find(']')].split()
+                        j['color'], j['width'], j['b_width'], j['b_color'] \
+                            = dt[idx][dt[idx].find(']') + 2:].split(';')
+                        idx += 1
+                    idx = 6
+                    for mar in marks:
+                        mar['ll'], mar['style'], mar['color'], mar['size'], mar['content'] = dt[idx].split(';')
+                        idx += 1
+                change = True
             elif 120 <= event.pos[0] <= 200 and 20 <= event.pos[1] <= 50: # Сохранить
                 typing = False
                 with open(f'{texts["file"]}.txt', mode='wt', encoding='utf-8') as f:
-                    f.write('-map-\n')
-                    f.write(f'{map_params["ll"]};{map_params["z"]};{map_params["l"]}')
-                    f.write('-routes-\n')
+                    f.write(f'{map_params["ll"]}\n')
+                    f.write(f'{map_params["z"]}\n')
+                    f.write(f'{map_params["l"]}\n')
                     for el in routes:
-                        f.write(f'{el["color"]};{el["width"]};{el["b_width"]};{el["b_color"]};{el["points"]}\n')
-                    f.write('-marks-\n')
+                        f.write(
+                            f'[{" ".join(el["points"])}];{el["color"]};{el["width"]};{el["b_width"]};{el["b_color"]}\n')
                     for el in marks:
                         f.write(f'{el["ll"]};{el["style"]};{el["color"]};{el["size"]};{el["content"]}\n')
-                    f.write('-end-\n')
+                with open(f'{texts["file"]}.png', mode='wb') as f:
+                    response = requests.get(map_api_server, params=map_params)
+                    f.write(response.content)
             elif 213 <= event.pos[0] <= 305 and 20 <= event.pos[1] <= 50: # Файл
                 text = 'file'
                 typing = True
@@ -194,9 +213,6 @@ while running:
                 aim = not aim
                 typing = False
                 change = True
-            elif 787 <= event.pos[0] <= 909 and 20 <= event.pos[1] <= 54: # Обводка
-                typing = False
-                dot = True
             elif 640 <= event.pos[0] <= 810 and 70 <= event.pos[1] <= 104: # Линия
                 typing = False
                 dot = True
@@ -352,7 +368,6 @@ while running:
             display_button(566, 550, 'Искать')
             display_text_field(30, 603, f'Адрес: {texts["address"]}')
             display_button(650, 30, 'Прицел на карте')
-            display_button(797, 30, 'Обводка линии')
             display_button(650, 80, f'Переключить линию: {route + 1}')
             display_button(840, 80, 'Сохранить настройки')
             display_text_field(650, 134, texts[f'rc{route}'], 'Цвет линии HEX')

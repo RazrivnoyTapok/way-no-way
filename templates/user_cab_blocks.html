@@ -1,0 +1,58 @@
+{% extends "user_cab.html" %}
+
+{% block profile %}
+    <h2><img src="{{ pfp }}" width="10%" class="img-thumbnail"> {{ mapper.nickname }} #{{ mapper.id }}</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col" colspan="2"><h4>Информация о пользователе</h4></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Никнейм</th>
+                <td>{{ mapper.nickname }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Описание</th>
+                <td>{{ mapper.info }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Дата присоединения</th>
+                <td>{{ mapper.join_date }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Электронная почта</th>
+                <td>{{ mapper.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/redact_profile"><h3>Редактировать профиль</h3></a>
+{% endblock %}
+
+{% block settings %}
+    Настроек сайта пока нет: либо реализовать сложно, либо они не нужны
+{% endblock %}
+
+{% block posts %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Название</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Дата создания</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in mapper.routes %}
+                <tr>
+                    <th scope="row">{{ post.id }}</th>
+                    <td>{{ post.name }}</td>
+                    <td>{{ post.mapper.nickname }} #{{ post.author }}</td>
+                    <td>{{ post.creation_date }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -2,6 +2,10 @@
 
 {% block content %}
     <h1>Главная - форум</h1>
+    <form method="post" enctype="multipart/form-data">
+        {{ form.prompt(class="form-control") }} {{ form.submit(class="btn btn-primary") }}
+    </form>
+    <h2>Страница {{ page }}</h2>
     {% for route in routes %}
         <table class="table table-bordered">
             <thead>
@@ -15,11 +19,12 @@
             <tbody>
                 <tr>
                     <th scope="row">{{ route.id }}</th>
-                    <td>{{ route.name }}</td>
-                    <td>{{ route.mapper.nickname }} #{{ route.author }}</td>
+                    <td><a href="/post_view/{{ route.id }}">{{ route.name }}</a></td>
+                    <td><a href="/profile_view/{{ route.author }}">{{ route.mapper.nickname }} #{{ route.author }}</a></td>
                     <td>{{ route.creation_date }}</td>
                 </tr>
             </tbody>
         </table>
+        <img src="{{ file_url[loop.index0] }}" class="img-fluid" alt="..." width="600px">
     {% endfor %}
 {% endblock %}

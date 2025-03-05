@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Просмотр профиля #{{ mapper.id }}</h1>
+    <h2><img src="{{ pfp }}" width="10%" class="img-thumbnail"> {{ mapper.nickname }} #{{ mapper.id }}</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col" colspan="2"><h4>Информация о пользователе</h4></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Никнейм</th>
+                <td>{{ mapper.nickname }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Описание</th>
+                <td>{{ mapper.info }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Дата присоединения</th>
+                <td>{{ mapper.join_date }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Посты</th>
+                <td>Пока что посты не отображаются в профиле из-за сильной нагрузки на приложение. Извините :(</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
